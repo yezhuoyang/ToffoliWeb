@@ -71,35 +71,39 @@ document.addEventListener('DOMContentLoaded', function() {
             qubit.style.opacity = 1; // Reset opacity
         });
     }
-    
+
     circuitDiagram.addEventListener('drop', function(e) {
         e.preventDefault();
         resetQubitOpacity(); // Reset opacity for all qubit lines
     
-        // Assume data contains identifier or HTML of the gate, or you could use other attributes to recreate the gate
         let data = e.dataTransfer.getData('text/html');
         let droppedElement = document.createElement('div');
         droppedElement.innerHTML = data;
         let gateHTML = droppedElement.querySelector('.draggable-gate');
     
         if (!gateHTML) {
-            return; // Exit if no gate found
+            return; // Exit if no gate is found
         }
     
         let gateX = e.clientX - this.getBoundingClientRect().left + window.scrollX;
         let gateY = e.clientY - this.getBoundingClientRect().top + window.scrollY;
-    
-        // Create a new gate element for insertion
-        let newGate = document.createElement('div');
-        newGate.className = 'draggable-gate'; // Set class name to match your draggable gates
-        newGate.innerHTML = gateHTML.innerHTML; // Copy inner HTML from dropped gate
-        newGate.style.position = 'absolute';
-        newGate.style.left = (gateCount * gateWidth) + 'px'; // Position based on sequential count
-        let overlappingQubit = doesGateOverlapWithQubit(gateX, gateY);
+        
+        let overlappingQubit = findOverlappingQubit(gateX, gateY);
         if (overlappingQubit) {
-            newGate.style.top = (overlappingQubit.getBoundingClientRect().top - circuitDiagram.getBoundingClientRect().top) + 'px';
-            overlappingQubit.appendChild(newGate); // Append the newly created gate to the overlapping qubit
-            gateCount++; // Increment global gate count
+            // Create a new gate element
+            let newGate = createNewGateElement(gateHTML);
+            
+            // Set the gate's vertical position to align with the qubit line's vertical center
+            let qubitRect = overlappingQubit.getBoundingClientRect();
+            let qubitCenterY = qubitRect.top + qubitRect.height / 2;
+            newGate.style.top = (qubitCenterY - gateHeight / 2) + 'px';
+            
+            // Set the gate's horizontal position based on the count of existing gates
+            newGate.style.left = (gateCount * gateWidth) + 'px';
+    
+            overlappingQubit.appendChild(newGate);
+            gateCount++;
+            updateOutput(newGate.innerText, gateCount);
         }
     });
     
@@ -108,4 +112,13 @@ document.addEventListener('DOMContentLoaded', function() {
     circuitDiagram.addEventListener('dragleave', function(e) {
         resetQubitOpacity();
     });
+
+
+
+    function updateOutput(gateType, count) {
+        let output = document.getElementById('gate-output');
+        output.textContent = `Gate count: ${count}, Last added gate: ${gateType}`;
+    }
+
+
 });
