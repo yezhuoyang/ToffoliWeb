@@ -97,6 +97,60 @@ const identity_matrix_3_qubit = [[1, 0,0,0,0,0,0,0], [0, 1,0,0,0,0,0,0],
                                      [0, 0,0,0,0,0,1,0],[0, 0,0,0,0,0,0,1]];
 
 
+function matrixMultiply(a, b) {
+    let result = new Array(a.length);
+
+    for (let i = 0; i < a.length; i++) {
+        result[i] = new Array(b[0].length).fill(0);
+        for (let j = 0; j < b[0].length; j++) {
+            for (let k = 0; k < a[0].length; k++) {
+                result[i][j] += a[i][k] * b[k][j];
+            }
+        }
+    }
+
+    return result;
+}
+
+
+function matrixMultiply(a, b) {
+    let result = new Array(a.length);
+    for (let i = 0; i < a.length; i++) {
+        result[i] = new Array(b[0].length).fill(0);
+        for (let j = 0; j < b[0].length; j++) {
+            for (let k = 0; k < a[0].length; k++) {
+                result[i][j] += a[i][k] * b[k][j];
+            }
+        }
+    }
+    return result;
+}
+
+
+
+function tensorProduct(a, b) {
+    let result = new Array(a.length * b.length);
+    
+    for (let i = 0; i < result.length; i++) {
+        result[i] = new Array(a[0].length * b[0].length); // Initialize each sub-array
+    }
+
+    for (let i = 0; i < a.length; i++) {
+        for (let j = 0; j < a[0].length; j++) {
+            for (let k = 0; k < b.length; k++) {
+                for (let l = 0; l < b[0].length; l++) {
+                    result[i * b.length + k][j * b[0].length + l] = a[i][j] * b[k][l];
+                }
+            }
+        }
+    }
+    return result;
+}
+
+
+
+
+
 // Quantum state and gate operations
 class QuantumCircuit {
     constructor() {
@@ -129,20 +183,48 @@ class QuantumCircuit {
 
     //Caclulate the whole 8*8 matrix of the circuit
     calculate_matrix(){
+        let gate_matrix;
         for (let i = 0; i < this.gates.length; i++) {
-            console.log(this.gatesp[i].name); // Outputs the element at index i
+            console.log(this.gates[i].name); // Outputs the element at index i
             if (this.gates[i].is_singlequbit){
                 gate_matrix=this.extend_single_gate(this.gates[i]);
             }
             else{
                 gate_matrix=this.extend_two_qubit_gate(this.gates[i]);
             }
-            this.matrix = math.multiply(gate_matrix, this.matrix);
+            this.matrix = matrixMultiply(gate_matrix, this.matrix);
         }
         return this.matrix;
     }
+
+    //TODO: Calculate the Hilbert-Schmidt distance between the calculated matrix and the Toffoli matrix
+    calculate_Hilbert_Schmidt_distance(){
+        let distance=0;
+        for (let i = 0; i < ToffoliMatrix.length; i++) {
+            for (let j = 0; j < ToffoliMatrix[0].length; j++) {
+                distance+=Math.pow(ToffoliMatrix[i][j],2);
+            }
+        }
+        return Math.sqrt(distance);
+    }
+
 
 
 
 }
 
+
+
+module.exports = QuantumCircuit;
+
+
+
+
+function test_tensor() {
+    let a = [[1, 0], [0, 1]];
+    let b = [[0, 1], [1, 0]];
+    console.log(tensorProduct(a, b));
+}
+
+// Call the main function
+test_tensor();

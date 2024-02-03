@@ -1,0 +1,67 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.menu-bar {
+    width: 20%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.circuit-design {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.circuit-diagram, .output-window {
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.circuit-diagram {
+    height: 50%;
+}
+
+.output-window {
+    height: 30%;
+    overflow-y: auto;
+}
+
+
+.qubit {
+    padding: 20px 0;
+    border-bottom: 1px solid #666;
+    position: relative;
+    margin: 20px 0;
+}
+
+.fixed-gate {
+    /* Styles for the fixed gates in the menu */
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #ddd;
+    cursor: pointer; /* Indicates that the item can be interacted with */
+    position: relative; /* Positioned relative to its nearest positioned ancestor */
+    border: 1px solid #ccc;
+}
+
+.draggable-gate {
+    /* Updated styles for gates that will be dragged and dropped */
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 0 5px;
+    color: red;
+    background-color: #bbb;
+    cursor: grab; /* Change cursor to indicate draggable items */
+    position: absolute; /* Positioned relative to its nearest positioned ancestor */
+    border: 1px solid #aaa;
+}

@@ -7,41 +7,31 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header>
-        <h1>Quantum Circuit Simulation Contest</h1>
-    </header>
-
-    <main>
-        <section id="circuit-designer">
-            <h2>Design Your Quantum Circuit</h2>
-            <div id="circuit-canvas">
-                <!-- Placeholder for the quantum circuit drag-and-drop UI -->
-                <p>Drag and drop qubit gates here to design your circuit.</p>
+    <div class="container">
+        <aside class="menu-bar">
+            <!-- Quantum circuits menu -->
+            <h2>Allowed Gates</h2>
+            <div class="gate fixed-gate" id="gate-x">X Gate</div>
+            <div class="gate fixed-gate" id="gate-h">H Gate</div>
+            <div class="gate fixed-gate" id="gate-t">T Gate</div>
+        </aside>
+        <section class="circuit-design">
+            <div class="circuit-diagram">
+                <h3>Circuit Diagram</h3>
+                <div class="qubit" id="qubit-0">Qubit 0</div>
+                <div class="qubit" id="qubit-1">Qubit 1</div>
+                <div class="qubit" id="qubit-2">Qubit 2</div>
             </div>
-            <button id="simulate-button">Simulate Circuit</button>
+            <div class="output-window">
+                <h3>Output</h3>
+                <!-- Output matrix display goes here -->
+            </div>
         </section>
+    </div>
 
-        <section id="upload-circuit">
-            <h2>Upload Your Circuit Design</h2>
-            <input type="file" id="circuit-upload" accept=".json">
-            <button id="upload-button">Upload Circuit</button>
-        </section>
-
-        <section id="leaderboard">
-            <h2>Leaderboard</h2>
-            <ol id="leaderboard-list">
-                <!-- Dynamically filled with participant rankings -->
-            </ol>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Quantum Circuit Contest</p>
-    </footer>
-
-    <script src="js/main.js"></script>
     <script src="js/quantumSimulator.js"></script>
     <script src="js/ui.js"></script>
     <script src="js/api.js"></script>
 </body>
 </html>
+
