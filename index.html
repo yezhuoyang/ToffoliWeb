@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Circuit Contest</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Quantum Circuit Simulation Contest</h1>
+    </header>
+
+    <main>
+        <section id="circuit-designer">
+            <h2>Design Your Quantum Circuit</h2>
+            <div id="circuit-canvas">
+                <!-- Placeholder for the quantum circuit drag-and-drop UI -->
+                <p>Drag and drop qubit gates here to design your circuit.</p>
+            </div>
+            <button id="simulate-button">Simulate Circuit</button>
+        </section>
+
+        <section id="upload-circuit">
+            <h2>Upload Your Circuit Design</h2>
+            <input type="file" id="circuit-upload" accept=".json">
+            <button id="upload-button">Upload Circuit</button>
+        </section>
+
+        <section id="leaderboard">
+            <h2>Leaderboard</h2>
+            <ol id="leaderboard-list">
+                <!-- Dynamically filled with participant rankings -->
+            </ol>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Quantum Circuit Contest</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/quantumSimulator.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/api.js"></script>
+</body>
+</html>
